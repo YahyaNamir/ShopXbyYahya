@@ -9,28 +9,26 @@ import Header from "@/components/product-page/Header";
 import Tabs from "@/components/product-page/Tabs";
 import { Product } from "@/types/product.types";
 import { notFound } from "next/navigation";
+import { NextPage } from "next";
 
-// Merging product data
 const data: Product[] = [
   ...newArrivalsData,
   ...topSellingData,
   ...relatedProductData,
 ];
 
-// Define ProductPageProps interface to correctly handle slug as an array of strings
+// Define the prop types for the page component
 interface ProductPageProps {
   params: {
-    slug: string[];  // Keep slug as string[] to handle dynamic routes properly
+    slug: string[];
   };
 }
 
-export default function ProductPage({ params }: ProductPageProps) {
-  // Find product using the slug (first part of the slug)
+const ProductPage: NextPage<ProductPageProps> = ({ params }) => {
   const productData = data.find(
     (product) => product.id === Number(params?.slug?.[0])
   );
 
-  // If no product found, trigger the 'notFound' page
   if (!productData?.title) {
     notFound();
   }
@@ -39,7 +37,7 @@ export default function ProductPage({ params }: ProductPageProps) {
     <main>
       <div className="max-w-frame mx-auto px-4 xl:px-0">
         <hr className="h-[1px] border-t-black/10 mb-5 sm:mb-6" />
-        <BreadcrumbProduct title={productData?.title ?? "product"} />
+        <BreadcrumbProduct title={productData?.title ?? "Product"} />
         <section className="mb-11">
           <Header data={productData} />
         </section>
@@ -50,4 +48,6 @@ export default function ProductPage({ params }: ProductPageProps) {
       </div>
     </main>
   );
-}
+};
+
+export default ProductPage;
