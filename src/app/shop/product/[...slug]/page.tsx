@@ -16,11 +16,13 @@ const data: Product[] = [
   ...relatedProductData,
 ];
 
-export default function ProductPage({
-  params,
-}: {
-  params: { slug: string[] };
-}) {
+interface ProductPageProps {
+  params: {
+    slug: string[];
+  };
+}
+
+export default function ProductPage({ params }: ProductPageProps) {
   const productData = data.find(
     (product) => product.id === Number(params.slug[0])
   );
