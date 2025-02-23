@@ -10,23 +10,27 @@ import Tabs from "@/components/product-page/Tabs";
 import { Product } from "@/types/product.types";
 import { notFound } from "next/navigation";
 
+// Merging product data
 const data: Product[] = [
   ...newArrivalsData,
   ...topSellingData,
   ...relatedProductData,
 ];
 
+// Define ProductPageProps interface to correctly handle slug as an array of strings
 interface ProductPageProps {
   params: {
-    slug: string[];
+    slug: string[];  // Keep slug as string[] to handle dynamic routes properly
   };
 }
 
 export default function ProductPage({ params }: ProductPageProps) {
+  // Find product using the slug (first part of the slug)
   const productData = data.find(
     (product) => product.id === Number(params?.slug?.[0])
   );
 
+  // If no product found, trigger the 'notFound' page
   if (!productData?.title) {
     notFound();
   }
