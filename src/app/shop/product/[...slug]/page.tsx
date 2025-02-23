@@ -24,7 +24,7 @@ interface ProductPageProps {
 
 export default function ProductPage({ params }: ProductPageProps) {
   const productData = data.find(
-    (product) => product.id === Number(params.slug[0])
+    (product) => product.id === Number(params?.slug?.[0])
   );
 
   if (!productData?.title) {
